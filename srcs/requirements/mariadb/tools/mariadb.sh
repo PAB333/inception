@@ -9,16 +9,16 @@ service mariadb start
 sleep 5
 
 # on creer la base de donnee si elle n'existe pas deja
-mysql -e "CREATE DATABASE IF NOT EXISTS \'${SQL_DATABASE}\';"
+mysql -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;"
 
 # on creer l'utilisateur normal
-mysql -e "CREATE USER IF NOT EXISTS \'${SQL_USER}\'@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
+mysql -e "CREATE USER IF NOT EXISTS \`${SQL_USER}\`@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
 
 # on attribue les droit sur la base de donnee a cet utilisateur
-mysql -e "GRANT ALL PRIVILEGES ON \'${SQL_DATABASE}\'.* TO \'${SQL_USER}\'@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
+mysql -e "GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO \`${SQL_USER}\`@`%` IDENTIFIED BY `${SQL_PASSWORD}`;"
 
 # on modifie le mdp de l'utilisateur
-mysql -e "ALTER USER'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
+mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
 
 # on applique les nouveau privileges
 mysql -e "FLUSH PRIVILEGES;"
