@@ -6,7 +6,7 @@ services:
     # c'est le chemin vers le dossier contenant le dockerfile de mariadb
     build: ./requirements/mariadb
     # en cas de crash on redemarre mariadb
-    restart: always
+    restart: on-failure
     # ici on donne le fichier .env pour mariadb.sh
     env_file:
       - .env
