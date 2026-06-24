@@ -1,0 +1,37 @@
+# un service est un conteneur en cours d'utlisation
+services:
+  mariadb:
+    # c'est le nom du conteneur (il doit etre le meme que le service)
+    container_name: mariadb
+    # c'est le chemin vers le dossier contenant le dockerfile de mariadb
+    build: ./requirements/mariadb
+    # en cas de crash on redemarre mariadb
+    restart: always
+    # ici on donne le fichier .env pour mariadb.sh
+    env_file:
+      - .env
+    # ici on connecte le conteneur a notre reseau interne
+    networks:
+      - inception_network
+    # on lie le dossier interne de mariaDB au volume persistant
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+# definition du reseau docker (sous reseau isole)
+# on en a besoin car de base les conteneurs ne peuvent pas communique
+# entre eux
+networks:
+  inception_network:
+    name: inception_network
+    driver: bridge
+
+# definition des volumes nommes
+# Les volumes permettent de stocker les donnee lorsque l'on eteint mariadb
+# on met le path vers lequel mariadb va sauvegarder ses donnees
+volumes:
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/pibreiss/data/mariadb
