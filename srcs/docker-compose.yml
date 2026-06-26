@@ -16,6 +16,18 @@ services:
     # on lie le dossier interne de mariaDB au volume persistant
     volumes:
       - mariadb_data:/var/lib/mysql
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress
+    restart: on-failure
+    env_file:
+      - .env
+    networks:
+      - inception_network
+    depends_on:
+      - mariadb
+    volumes:
+      - wordpress_data:/var/www/html
 
 # definition du reseau docker (sous reseau isole)
 # on en a besoin car de base les conteneurs ne peuvent pas communique
@@ -35,3 +47,9 @@ volumes:
       type: none
       o: bind
       device: /home/pibreiss/data/mariadb
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/pibreiss/data/wordpress

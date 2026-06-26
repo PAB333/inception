@@ -4,7 +4,7 @@
 cd /var/www/html
 
 # on installe wp-cli si il n'est pas deja telecharger
-if [ ! -f "/usr/local/bin/wp"]; then
+if [ ! -f "/usr/local/bin/wp" ]; then
     curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
     chmod +x wp-cli.phar
     mv wp-cli.phar /usr/local/bin/wp
@@ -25,4 +25,5 @@ fi
 # on donne les droits a www-data (utilisateur linux standard) de tous les fichiers telecharges
 chown -R www-data:www-data /var/www/html
 
-exec /usr/sbin/php-fm8.2 -F
+# on execle processus PHP-FPM
+exec /usr/sbin/php-fpm8.2 -F
