@@ -28,6 +28,18 @@ services:
       - mariadb
     volumes:
       - wordpress_data:/var/www/html
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    restart: on-failure
+    ports:
+      - "443:443"
+    networks:
+      - inception_network
+    depends_on:
+      - wordpress
+    volumes:
+      - wordpress_data:/var/www/html
 
 # definition du reseau docker (sous reseau isole)
 # on en a besoin car de base les conteneurs ne peuvent pas communique
