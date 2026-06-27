@@ -25,7 +25,7 @@ if [ ! -f "wp-config.php" ]; then
     # on genere un fichier de config en lui donnant les identifiant de la db
     wp config create --dbname=${SQL_DATABASE} --dbuser=${SQL_USER} --dbpass=${SQL_PASSWORD} --dbhost=mariadb --allow-root
     # on creer la structure de la base de donnee et aussi on creer le compte admin
-    wp core install --url=${WP_URL} --title="Inception" --admin_user=${WP_ADMIN_USER} --admin_password=${WP_ADMIN_PASSWORD} --admin_email=${WP_ADMIN_EMAIL} --allow-root
+    wp core install --url=https://${DOMAIN_NAME} --title="Inception" --admin_user=${WP_ADMIN_USER} --admin_password=${WP_ADMIN_PASSWORD} --admin_email=${WP_ADMIN_EMAIL} --allow-root
     # on creer le deuxieme user
     wp user create ${WP_USER} ${WP_USER_EMAIL} --role=author --user_pass=${WP_USER_PASSWORD} --allow-root
 fi
