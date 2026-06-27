@@ -1,6 +1,9 @@
 #!/bin/bash
 
 # ce fichier permet de creer la base et des utilisateurs a partir des variables d'environnement
+# on recupere les mdp des fichiers secrets
+export SQL_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
+export SQL_PASSWORD=$(cat /run/secrets/db_password)
 
 # on verifie si la base existe deja
 if [ ! -d "/var/lib/mysql/${SQL_DATABASE}" ]; then

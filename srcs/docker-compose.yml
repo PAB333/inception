@@ -3,6 +3,7 @@ services:
   mariadb:
     # c'est le nom du conteneur (il doit etre le meme que le service)
     container_name: mariadb
+    image: mariadb
     # c'est le chemin vers le dossier contenant le dockerfile de mariadb
     build: ./requirements/mariadb
     # en cas de crash on redemarre mariadb
@@ -16,8 +17,12 @@ services:
     # on lie le dossier interne de mariaDB au volume persistant
     volumes:
       - mariadb_data:/var/lib/mysql
+    secrets:
+      - db_root_password
+      - db_password
   wordpress:
     container_name: wordpress
+    image: wordpress
     build: ./requirements/wordpress
     restart: on-failure
     env_file:
@@ -28,8 +33,12 @@ services:
       - mariadb
     volumes:
       - wordpress_data:/var/www/html
+    secrets:
+      - db_password
+      - credentials
   nginx:
     container_name: nginx
+    image: nginx
     build: ./requirements/nginx
     restart: on-failure
     ports:
@@ -65,3 +74,11 @@ volumes:
       type: none
       o: bind
       device: /home/pibreiss/data/wordpress
+
+secrets:
+  db_root_password:
+    file: ../secrets/db_root_password.txt
+  db_password:
+    file: ../secrets/db_password.txt
+  credentials:
+    file: ../secrets/credentials.txt

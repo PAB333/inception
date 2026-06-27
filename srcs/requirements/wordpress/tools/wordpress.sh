@@ -3,6 +3,14 @@
 # on va dans le dossier qui va contenir les fichiers du site
 cd /var/www/html
 
+export SQL_PASSWORD=$(cat /run/secrets/db_password)
+export WP_ADMIN_PASSWORD=$(cat /run/secrets/credentials)
+
+# on attend que la base de donnees soit prete
+until mysqladmin ping -h mariadb --silent; do
+    sleep 2
+done
+
 # on installe wp-cli si il n'est pas deja telecharger
 if [ ! -f "/usr/local/bin/wp" ]; then
     curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
