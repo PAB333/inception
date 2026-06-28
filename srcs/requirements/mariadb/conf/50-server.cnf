@@ -1,13 +1,9 @@
 [mysqld]
 
-# port standard de Mysql/MariaDB
 port = 3306
 
-# on dit a MariaDB d'ecouter toutes les adresses ip alors que de bas elle ecoute que localhost
 bind-address = 0.0.0.0
 
-# c'est la ou seront stockees toutes les donnee
 datadir = /var/lib/mysql
 
-# utilisateur qui execute le processus
 user = mysql
